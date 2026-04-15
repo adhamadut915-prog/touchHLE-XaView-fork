@@ -657,3 +657,8 @@ pub fn autorelease(env: &mut Environment, object: id) -> id {
     }
     msg![env; object autorelease]
 }
+// BypassHidesBottomBar
+            if selector.as_str(&env.mem) == "setHidesBottomBarWhenPushed:" {
+                env.cpu.regs_mut()[0..2].fill(0);
+                return;
+            }
