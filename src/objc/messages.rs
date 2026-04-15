@@ -188,7 +188,17 @@ fn objc_msgSend_inner(
                 env.cpu.regs_mut()[0..2].fill(0);
                 return;
             }
-
+            // BypassHidesBottomBar
+            if selector.as_str(&env.mem) == "setHidesBottomBarWhenPushed:" {
+                env.cpu.regs_mut()[0..2].fill(0);
+                return;
+            }
+            panic!(
+            // BypassDictCreate
+            if selector.as_str(&env.mem) == "dictionaryWithObjects:forKeys:count:" {
+                env.cpu.regs_mut()[0..2].fill(0);
+                return;
+            }
             panic!(
                 "{} {:?} ({}class \"{}\", {:?}){} does not respond to selector \"{}\"!",
                 if is_metaclass { "Class" } else { "Object" },
@@ -657,8 +667,3 @@ pub fn autorelease(env: &mut Environment, object: id) -> id {
     }
     msg![env; object autorelease]
 }
-// BypassHidesBottomBar
-            if selector.as_str(&env.mem) == "setHidesBottomBarWhenPushed:" {
-                env.cpu.regs_mut()[0..2].fill(0);
-                return;
-            }
